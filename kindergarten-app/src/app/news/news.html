@@ -1,1 +1,12 @@
-<p>news works!</p>
+<h2>News</h2>
+
+<div *ngFor="let n of newsList">
+    <h3>{{ n.title }}</h3>
+    <p>{{ n.content }}</p>
+    <hr>
+</div>
+
+<h3>Add News</h3>
+<input #title placeholder="Title"><br><br>
+<textarea #text placeholder="Text"></textarea><br><br>
+<button (click)="addNews(title.value, text.value)">Add News</button>
