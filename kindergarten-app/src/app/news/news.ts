@@ -15,13 +15,19 @@ export class NewsComponent {
   newsList: News[] = [];
 
   constructor(private firestore: Firestore) {
-    const ref = collection(this.firestore, 'news');
-    collectionData(ref).subscribe(data => {
-      this.newsList = data as News[];
-    });
+    const newsRef = collection(this.firestore, 'news');
+  collectionData(newsRef).subscribe({
+  next: (data) => {
+    this.newsList = data as News[];
+  },
+  error: (err) => {
+    console.error("Firestore read error:", err);
+  }
+});
   }
 
   addNews(title: string, text: string) {
+    console.log('Adding news:', title, text);
     const ref = collection(this.firestore, 'news');
     
     const news: News = {
@@ -30,7 +36,9 @@ export class NewsComponent {
       date: new Date()
     };
 
-    addDoc(ref, news);
+    addDoc(ref, news)
+     .then(() => console.log("Saved to Firestore"))
+    .catch((err:any) => console.error("Firestore error:", err));
   }
 
 }
