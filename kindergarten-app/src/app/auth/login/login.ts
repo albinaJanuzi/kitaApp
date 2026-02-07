@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,19 +14,27 @@ export class LoginComponent {
   email = '';
   password = '';
 
-  login(){
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, this.email, this.password)
-      .then(() => alert('Login successful!'))
-      .catch(err => 
-        alert(err.message));
-  }
+  login() {
+  signInWithEmailAndPassword(this.auth, this.email, this.password)
+    .then(() => {
+      this.router.navigate(['/news']);
+    })
+    .catch((err: any) => {
+  console.log("Firebase error:", err);
+  alert(err.message);
+});
+}
 
-  register(){
-    const auth = getAuth();
-    createUserWithEmailAndPassword(auth, this.email, this.password)
-      .then(() => alert('Registration successful!'))
-      .catch(err => 
-        alert(err.message));
-  }
+  register() {
+  createUserWithEmailAndPassword(this.auth, this.email, this.password)
+    .then(() => {
+      this.router.navigate(['/news']);
+    })
+    .catch((err: any) => {
+  console.log("Firebase error:", err);
+  alert(err.message);
+});
+}
+
+  constructor(private auth: Auth, private router: Router) {}
 }
