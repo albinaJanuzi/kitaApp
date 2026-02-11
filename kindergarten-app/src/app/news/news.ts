@@ -4,11 +4,13 @@ import { CommonModule } from '@angular/common';
 import { News } from '../models/news.model';
 import { Auth, signOut } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { NavbarComponent } from '../shared/navbar/navbar';
+
 
 @Component({
   selector: 'app-news',
   standalone: true,
-  imports: [ CommonModule],
+  imports: [CommonModule, NavbarComponent],
   templateUrl: './news.html',
   styleUrl: './news.css',
 })
